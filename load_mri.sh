@@ -15,11 +15,30 @@ set label=`basename $1`
 echo "cd $destination_directory"
 echo "mksubjdirs $label"
 
-echo "setenv SUBJECTS_DIR /home/mxhuang/subjects"
+echo "setenv SUBJECTS_DIR $destination_directory"
 echo "setenv SUBJECT $label"
 echo "convert the one from the folder with ~170 items"
 
-echo "stat $label/mri/orig/001.mgz"
+# for each directory in the source
+# look for one with a file count between 150 and 200
+# run the convert on it and save it as:
+# destination/mri/orig/001.mgz
+
+cd $1
+
+cd *
+
+foreach path (*.$1)
+#count files
+set $file_count = `ls -1 $path | wc -l`
+if ($file_count >= 150 && $file_count <= 200) then
+ set one_file = $path/*.1
+ echo "convert $one_file"
+endif
+end
+
+
+echo "stat $destination_directory/$label/mri/orig/001.mgz"
 
 echo "recon-all -subjid $label -all"
 
