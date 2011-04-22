@@ -1,8 +1,5 @@
 #!/usr/bin/env tcsh
 
-
-set source_directory=$2
-
 if ($#argv != 2) then
   echo "Usage: $0 source_directory data_label"
   echo "runs MRI data in source_directory through Freesurfer recon"
@@ -10,7 +7,12 @@ if ($#argv != 2) then
   goto error
 endif
 
-cd $data_home
+set source_directory=`dirname $1`
+set destination_directory=$2
+set label=`basename $1`
+
+
+echo "cd $destination_directory"
 echo "mksubjdirs $label"
 
 echo "setenv SUBJECTS_DIR /home/mxhuang/subjects"
