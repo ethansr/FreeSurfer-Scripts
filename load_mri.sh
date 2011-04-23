@@ -15,7 +15,7 @@ if ($#argv != 3) then
   goto error
 endif
 
-set source_directory=`dirname $1`
+set source_directory=$1
 set destination_directory=$2
 set label=$3 
 
@@ -31,9 +31,13 @@ echo "convert the one from the folder with ~170 items"
 # run the convert on it and save it as:
 # destination/mri/orig/001.mgz
 
-cd $1
+cd $source_directory
 
+#can assume there is one file in this folder for the moment
 cd *
+
+#several folders with different types of data, can recognize the
+#one we wants based on the number of DICOM images
 
 foreach directory (*)
   set file_count = `ls -1 $directory | wc -l`
@@ -43,13 +47,14 @@ foreach directory (*)
   endif
 end
 
-
-echo "stat $destination_directory$label/mri/orig/001.mgz"
-
-echo "recon-all -subjid $label -all"
-
+if ( -e $destination_directory$label/mri/orig/001.mgz) then
+  echo "recon-all -subjid $label -all"
+  goto done
+else
+  goto error
+endif
 
 done:
-exit 0
+  exit 0
 error:
-exit 1
+  exit 1
