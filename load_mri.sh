@@ -1,5 +1,8 @@
 #!/usr/bin/env tcsh
 
+#Script to run recon jobs with Freesurfer.
+#ethan.soutar.rau@gmail.com
+
 if ($#argv != 3) then
   echo "Usage: $0 source_directory output_directory data_label"
   echo "runs MRI data in source_directory through Freesurfer recon"
