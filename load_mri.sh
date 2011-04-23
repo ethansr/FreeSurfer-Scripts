@@ -3,6 +3,11 @@
 #Script to run recon jobs with Freesurfer.
 #ethan.soutar.rau@gmail.com
 
+#TODO a lot of the bother with the arguments occurs because our data isn't
+#FS expects it. Maybe move data into subfolder of subject folder before
+#processing. Folder shuffling is so confusing because of the (imho)
+#overreliance on setting environmental variables.
+
 if ($#argv != 3) then
   echo "Usage: $0 source_directory output_directory data_label"
   echo "runs MRI data in source_directory through Freesurfer recon"
